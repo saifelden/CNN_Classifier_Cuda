@@ -47,6 +47,9 @@ int main(){
     dim3 blocks(int(64/thread_size),int(64/thread_size));
     forward<<<blocks,threads>>>(dinput,dweights,3,size,doutput);
     calc_tanh_forward<<<blocks,threads>>>(doutput,size,activation_output);
+    dim3 nthreads(thread_size,thread_size,3);
+    dim3 nblocks(int(64/thread_size),int(64/thread_size),1);
+    calc_pooling_forward<<<nblocks,nthreads>>>(dinput,chosed,size,float *output,char type);
     cudaMemcpy(output,doutput,width*height*sizeof(float),cudaMemcpyDeviceToHost);
     cout<<"output matrix is :"<<endl;
     for(int i=0;i<width*height;i++)

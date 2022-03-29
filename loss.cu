@@ -6,6 +6,7 @@
 #include <vector>
 #include "size_struct.cpp"
 #include <math.h>
+
 __global__ void calc_softmax_forward(float* input,float total_sum,float* output){
     int idx = (blockDim.x*blockIdx.x)+threadIdx.x;
     output[idx]= exp(input[idx])/total_sum;
